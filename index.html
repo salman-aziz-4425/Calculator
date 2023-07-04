@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./stylings/mystyle.css">
+    <title>UI Basics</title>
+</head>
+<header>
+
+</header>
+<body>
+    <div class="Calculator-Container">
+        <div class="Container">
+            <div style="display: flex;justify-content: space-around;">
+                <h1 class="text1">Casio</h1>
+                <button style="width: max-content;height:72px;" class="Edit">Edit</button>
+                <button style="width: max-content;height:72px;" class="myOwnConstants">Create your Constant</button>
+                <div class="dropdown">
+                    <button style="width: max-content;height:72px;" class="myOwnConstants">History</button>
+                    <div class="dropdown-content">
+                    </div>
+                  </div>
+                  
+            </div>
+            
+            <div class="Display">
+                <input class="expression"></input>
+                <p class="result">0</p>
+            </div>
+            <div class="operations">
+                <button class="btn" value="1">1</button>
+                <button class="btn" value="2">2</button>
+                <button class="btn" value="3">3</button>
+                <button class="btn" value="4">4</button>
+                <button class="btn" value="5">5</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="-">-</button>
+                <button class="btn" value="6">6</button>
+                <button class="btn" value="7">7</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="+">+</button>
+                <button class="btn" value="8">8</button>
+                <button class="btn" value="9">9</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="*">*</button>
+                <button class="btn" value=".">.</button>
+                <button class="btn" value="0">0</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="+">+</button>
+                <button style="background-color: rgb(0, 0, 0);color: white;" class="eval1" value="=">=</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="/">/</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="sin">sin</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="cos">cos</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="tan">tan</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="^">^</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="3.1415">Pi</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="2.7182">e</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="(">(</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value=")">)</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="sqrt">sqrt</button>
+                <button style="background-color: rgb(40, 172, 40);color: white;" class="btn" value="%">%</button>
+                <button style="flex: 1;" class="clear">Clear</button>
+            </div>
+        </div>
+       <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Constant</h2>
+            <p class="Error" style="color: red;"></p>
+            <input type="text" id="constantName" placeholder="Constant Name">
+            <input type="text" id="constantValue" placeholder="Constant Value">
+            <button id="saveConstant">Save</button>
+        </div>
+    </div>
+
+     
+</body>
+<script src="./CalculatorFunc/cal.js"></script>
+<script src="./CalculatorFunc/utils/Evaluation.js"></script>
+
+</html>
