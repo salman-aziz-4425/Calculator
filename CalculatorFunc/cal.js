@@ -1,5 +1,4 @@
 
-"use-strict";
 //IIFE
 (function () {
   document.getElementsByClassName("expression")[0].disabled = true;
@@ -37,44 +36,32 @@ buttons.forEach((button) => {
   button.addEventListener("click", buttonInformation.bind(button));
   
 });
+const saveToHistory=()=>{
+  console.log(this)
+  const dropdownContent = document.getElementsByClassName("dropdown-content")[0];
+  const newDiv=document.createElement("div")
+  const deleteButton=document.createElement("button")
+  deleteButton.innerText="X"
+  newDiv.style.display="flex"
+  newDiv.style.justifyContent="space-between"
+  const newOption = document.createElement("p");
+  newOption.innerText = document.getElementsByClassName("expression")[0].value.trim();
+  newOption.onclick = function () {
+    console.log(this.innerText)
+    document.getElementsByClassName("expression")[0].value=this.innerText
+  }.bind(newOption);
+  deleteButton.addEventListener('click',function deleting(){
+    this.remove()
+    console.log(this)
+  }.bind(newDiv))
+  newDiv.appendChild(newOption)
+  newDiv.appendChild(deleteButton)
+  dropdownContent.appendChild(newDiv);
+}
 
 document.getElementsByClassName("clear")[0].addEventListener("click", () => {
-  console.log(evaluated)
-  if (evaluated === true) {
-    const dropdownContent = document.getElementsByClassName("dropdown-content")[0];
-    const duplicates=Object.values(dropdownContent.children).filter((btn)=>{
-      console.log(btn.innerText)
-       return btn.innerText===document.getElementsByClassName("expression")[0].value.trim()
-    })
-    if(duplicates.length===0){
-    const newDiv=document.createElement("div")
-    const deleteButton=document.createElement("button")
-    deleteButton.innerText="X"
-    newDiv.style.display="flex"
-    newDiv.style.justifyContent="space-between"
-    const newOption = document.createElement("p");
-    newOption.innerText = document.getElementsByClassName("expression")[0].value.trim();
-    newOption.onclick = function () {
-      console.log(this.innerText)
-      document.getElementsByClassName("expression")[0].value=this.innerText
-    }.bind(newOption);
-    deleteButton.addEventListener('click',function deleting(){
-      this.remove()
-      console.log(this)
-      // document.getElementById(this).remove()
-    }.bind(newDiv))
-    newDiv.appendChild(newOption)
-    newDiv.appendChild(deleteButton)
-    dropdownContent.appendChild(newDiv);
-  }
     document.getElementsByClassName("expression")[0].value = "";
     document.getElementsByClassName("result")[0].innerText = 0;
-    evaluated === false
-  }
-  else{
-    document.getElementsByClassName("expression")[0].value = "";
-    document.getElementsByClassName("result")[0].innerText = 0;
-  }
 });
 
 
@@ -85,15 +72,28 @@ evaluation.forEach((button) => {
     console.log("hello");
     let result = document.getElementsByClassName("result")[0];
     let expres = document.getElementsByClassName("expression")[0].value.trim();
+    if(expres.length===0){
+      return;
+    }
     console.log(expres);
     try {
       evaluated=false
       expres = evaluate(expres);
-      console.log(expres);
+      console.log("Result=>"+expres);
       if (!isNaN(expres)) {
         result.innerText = expres;
+        const dropdownContent = document.getElementsByClassName("dropdown-content")[0];
+        const duplicates=Object.values(dropdownContent.children).filter((btn)=>{
+          console.log(btn.innerText)
+           return btn.innerText===document.getElementsByClassName("expression")[0].value.trim()
+        })
+        if(duplicates.length===0){
+          saveToHistory()
+        }
         evaluated=true
+        alert("Expression is Saved to History")
       } else {
+        result.style.scale="0.4"
         throw "Invalid syntax";
       }
     } catch (e) {

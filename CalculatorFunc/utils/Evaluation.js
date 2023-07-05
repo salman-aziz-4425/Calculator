@@ -49,7 +49,7 @@ tokens.forEach(token => {
   } else if (token === '(') {
     ops.push(token);
   } else if (token === ')') {
-      if( ops[ops.length - 1]==='('&&(ops[ops.length-1]==='sin'||ops[ops.length-1]==='cos' || ops[ops.length-1]==='sqrt' || ops[ops.length-1]==='tan')){
+      if( (ops[ops.length - 1]==='(')&&(ops[ops.length-2]==='sin'||ops[ops.length-2]==='cos' || ops[ops.length-2]==='sqrt' || ops[ops.length-2]==='tan')){
             var operand=ops.pop()
             values.push(applyOp( ops[ops.length - 1],parseFloat( values.pop()),' '));
       }
@@ -122,20 +122,20 @@ return values.pop().toFixed(4);
 // catch{
 //     console.log("error")
 // }
-console.log(evaluate("(10)")); // Output: 22
+// console.log(evaluate("(10)")); // Output: 22
 // console.log(evaluate("(100 * 2 + 12)")); // Output: 212
 // console.log(evaluate("(100 * (2 + 12))")); // Output: 1400
 // console.log(evaluate("(100 * (2 + 12) / 14)")); // Output: 100
 // console.log(evaluate("sin(sin(7+5)+cos(8+5))"));
 // // console.log(Math.sin(Math.sin(7+5)+Math.cos(8+5)))// Output: 100
-// console.log(evaluate("cos(100) * (sin(2)+ cos(12)) / sin(14)")); // Output: 100
-// console.log(evaluate("100* (2 + 12) / sin(14)")); // Output: 100
-// console.log(evaluate('sin(0)+cos(0)'));
-// console.log(evaluate("sin(30) + cos(45) * (10 - 5) / 2"));
+// console.log(evaluate("cos(100+7*99/5') * (sin(2)+ cos(12)) / sin(14)")); // Output: 100
+// // console.log(evaluate("100* (2 + 12) / sin(14)")); // Output: 100
+// // console.log(evaluate('sin(0)+cos(0)'));
+// // console.log(evaluate("sin(30) + cos(45) * (10 - 5) / 2"));
 // console.log(evaluate("sin(45) * cos(60) + sin(30) * tan(75)"));
-// console.log(evaluate("((3 + 5) * (7 / 2)) - ((4 * 6) + (9 / 3))")); 
-// try{
-// console.log(evaluate("(3 + 5 * 7 / 2) - (4 * 6 + 9 / 3))")); 
-// }catch{
-//  console.log("Invalid expression")
-// }
+// // console.log(evaluate("((3 + 5) * (7 / 2)) - ((4 * 6) + (9 / 3))")); 
+// // try{
+// // console.log(evaluate("(3 + 5 * 7 / 2) - (4 * 6 + 9 / 3))")); 
+// // }catch{
+// //  console.log("Invalid expression")
+// // }
