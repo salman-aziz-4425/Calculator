@@ -161,3 +161,29 @@ font-size: xx-large;
       .dropdown:hover .dropdown-content {
         display: block;
       }
+      @media (max-width:1200px) {
+        .operations button{
+            height: 58px;
+            width: 192px;
+
+            font-size: medium;
+            font-weight: bolder;
+        }
+      }
+      @media (max-width:900px) {
+        .operations button{
+            height: 48px;
+            width: 149px;
+            font-size: medium;
+            font-weight: bolder;
+        }
+      }
+
+      @media (max-width:600px) {
+        .operations button{
+            height: 48px;
+            width: 68px;
+            font-size: medium;
+            font-weight: bolder;
+        }
+      }

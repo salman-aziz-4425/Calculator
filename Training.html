@@ -6,7 +6,25 @@
     <title>Document</title>
 </head>
 <script>
+    
+    setTimeout(()=> {console.log('setTimeout')}, 0);
+    Promise.resolve("resolve").then(res => console.log(res));
+    console.log("log");
 
+
+    null?.()
+    null?.value
+    null?.[1]
+    console.log(null?.())
+    console.log( null?.value)
+    console.log( null?.[1])
+    console.log(undefined?.value)
+    console.log(({value: "test"})?.value)
+    undefined?.value
+    ({value: "test"})?.value;
+console.log(JSON.stringify({ x: NaN, y: 6 }));
+    // write a single statement to demonstrate destructuring, spread and rest operator
+    const [a,...array1]=[...[1,2,3,4,5,67]]
     const getName = (yourName, callback) => {
         const rand = Math.random();
         console.log("Random=>",rand)

@@ -1,24 +1,49 @@
-
 //IIFE
 (function () {
   document.getElementsByClassName("expression")[0].disabled = true;
+  
+  // alert(`Note
+  //   1)It will evaluate as you keep on clicking expressions
+  //   2)For saving in history you have to press Equal = button
+  //   3)For deleting hover on history to see evaluated expressions 
+  //   4)By clicking on Edit button you can edit the expression and then again edit to close that mode`)
 })();
-
+var calculatorButtons = {
+  '.':'.',
+  '+': '+',
+  '-': '-',
+  '*': '*',
+  '/': '/',
+  '^': '^',
+  '(': '(',
+  ')': ')',
+  'sin': 'sin',
+  'cos': 'cos',
+  'tan': 'tan',
+  'sqrt': 'sqrt',
+  '%': '%',
+  'Pi': '3.1415',
+  'e':'2.7182'
+};
+let indexToInsert=0
+let editable=false
 let evaluated=false
 //Event Listeners
 const buttons = document.querySelectorAll(".btn");
 
 function buttonInformation() {
-  console.log("Button clicked:", this.value);
-  let Content = document.getElementsByClassName("expression")[0];
-  Content.value += this.value;
   let result = document.getElementsByClassName("result")[0];
-  let expres = document.getElementsByClassName("expression")[0].value.trim();
-  console.log(expres);
+  let Content = document.getElementsByClassName("expression")[0];
+  if(editable===false){
+    Content.value += this.innerText;
+  }
+  else{
+    Content.value=Content.value.slice(0,indexToInsert)+this.innerText+Content.value.slice(indexToInsert)
+  }
+  indexToInsert+=1
   try {
     evaluated=false
-    expres = evaluate(expres);
-    console.log(expres);
+    let expres = evaluate(Content.value.trim(),calculatorButtons);
     if (!isNaN(expres)) {
       result.innerText = expres;
       evaluated=true
@@ -26,7 +51,6 @@ function buttonInformation() {
       throw "Invalid syntax";
     }
   } catch (e) {
-    console.log("Errir"+e.message);
     result.innerText = e.message;
     evaluated=false
   }
@@ -37,7 +61,6 @@ buttons.forEach((button) => {
   
 });
 const saveToHistory=()=>{
-  console.log(this)
   const dropdownContent = document.getElementsByClassName("dropdown-content")[0];
   const newDiv=document.createElement("div")
   const deleteButton=document.createElement("button")
@@ -47,12 +70,10 @@ const saveToHistory=()=>{
   const newOption = document.createElement("p");
   newOption.innerText = document.getElementsByClassName("expression")[0].value.trim();
   newOption.onclick = function () {
-    console.log(this.innerText)
     document.getElementsByClassName("expression")[0].value=this.innerText
   }.bind(newOption);
   deleteButton.addEventListener('click',function deleting(){
     this.remove()
-    console.log(this)
   }.bind(newDiv))
   newDiv.appendChild(newOption)
   newDiv.appendChild(deleteButton)
@@ -62,6 +83,7 @@ const saveToHistory=()=>{
 document.getElementsByClassName("clear")[0].addEventListener("click", () => {
     document.getElementsByClassName("expression")[0].value = "";
     document.getElementsByClassName("result")[0].innerText = 0;
+    indexToInsert=0
 });
 
 
@@ -69,35 +91,37 @@ document.getElementsByClassName("clear")[0].addEventListener("click", () => {
 const evaluation = document.querySelectorAll(".eval1");
 evaluation.forEach((button) => {
   button.addEventListener("click", () => {
-    console.log("hello");
     let result = document.getElementsByClassName("result")[0];
     let expres = document.getElementsByClassName("expression")[0].value.trim();
     if(expres.length===0){
       return;
     }
-    console.log(expres);
     try {
       evaluated=false
-      expres = evaluate(expres);
+      expres = evaluate(expres,calculatorButtons);
       console.log("Result=>"+expres);
       if (!isNaN(expres)) {
         result.innerText = expres;
         const dropdownContent = document.getElementsByClassName("dropdown-content")[0];
         const duplicates=Object.values(dropdownContent.children).filter((btn)=>{
-          console.log(btn.innerText)
-           return btn.innerText===document.getElementsByClassName("expression")[0].value.trim()
+          console.log("Already present=>"+btn.innerText)
+           return btn.innerText===document.getElementsByClassName("expression")[0].value.trim()+"X"
         })
+        console.log(duplicates)
         if(duplicates.length===0){
           saveToHistory()
+          alert("Expression is Saved to History")
+        }
+        else{
+          alert("Expression already Saved to History")
         }
         evaluated=true
-        alert("Expression is Saved to History")
+
       } else {
         result.style.scale="0.4"
         throw "Invalid syntax";
       }
     } catch (e) {
-      console.log("Errir"+e);
       result.innerText = e.message;
       evaluated=false
     }
@@ -109,9 +133,9 @@ evaluation.forEach((button) => {
 
 
 document.getElementsByClassName("Edit")[0].addEventListener("click", () => {
-  console.log("clicked");
   document.getElementsByClassName("expression")[0].disabled =
     !document.getElementsByClassName("expression")[0].disabled;
+   editable=!editable
 });
 
 
@@ -139,7 +163,6 @@ document.getElementById("saveConstant").onclick = function () {
   newButton.style.color = "white";
   newButton.innerText = constantName;
   newButton.value = constantValue;
-  console.log(newButton);
   newButton.addEventListener("click", buttonInformation.bind(newButton));
 
   let duplicates = Object.values(
@@ -157,3 +180,10 @@ document.getElementById("saveConstant").onclick = function () {
   }
 };
 
+document.getElementsByClassName("expression")[0].addEventListener("click",()=>{
+   document.getElementsByClassName("expression")[0].focus()
+  const cursorPosition =document.getElementsByClassName("expression")[0].selectionStart;
+  console.log("Cursor Position: ", cursorPosition);
+  indexToInsert=cursorPosition
+  editable=true
+})

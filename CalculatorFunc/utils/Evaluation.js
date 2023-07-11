@@ -37,10 +37,14 @@ const degreesToRadians = (degrees) => {
 
 
 
-function evaluate(expression) {
+function evaluate(expression,Values) {
   expression=expression.replace("%","/100")
-const tokens = expression.match(/\d+(\.\d+)?|[-+*^/()]|\d+|\w+|\bsin\b|\bcos\b/g);
-console.log(tokens)
+  const tokens = expression.match(/(?:\d+(\.\d+)?|[-+*^/()]|\b\w+\b|\b\w+\b|\bsin\b|\bcos\b)/g);
+for(let i=0;i<tokens.length;i++){
+  if(tokens[i] in Values){
+    tokens[i]=Values[tokens[i]]
+  }
+}
 const values = [];
 const ops = [];
 tokens.forEach(token => {
@@ -112,30 +116,3 @@ return values.pop().toFixed(4);
 }
 
 
-// // Usage example
-// try{
-//     if(isNaN(evaluate("10^2"))){
-//         throw "Invalid"
-//     }
-//       console.log(evaluate("10^2")); 
-// }
-// catch{
-//     console.log("error")
-// }
-// console.log(evaluate("(10)")); // Output: 22
-// console.log(evaluate("(100 * 2 + 12)")); // Output: 212
-// console.log(evaluate("(100 * (2 + 12))")); // Output: 1400
-// console.log(evaluate("(100 * (2 + 12) / 14)")); // Output: 100
-// console.log(evaluate("sin(sin(7+5)+cos(8+5))"));
-// // console.log(Math.sin(Math.sin(7+5)+Math.cos(8+5)))// Output: 100
-// console.log(evaluate("cos(100+7*99/5') * (sin(2)+ cos(12)) / sin(14)")); // Output: 100
-// // console.log(evaluate("100* (2 + 12) / sin(14)")); // Output: 100
-// // console.log(evaluate('sin(0)+cos(0)'));
-// // console.log(evaluate("sin(30) + cos(45) * (10 - 5) / 2"));
-// console.log(evaluate("sin(45) * cos(60) + sin(30) * tan(75)"));
-// // console.log(evaluate("((3 + 5) * (7 / 2)) - ((4 * 6) + (9 / 3))")); 
-// // try{
-// // console.log(evaluate("(3 + 5 * 7 / 2) - (4 * 6 + 9 / 3))")); 
-// // }catch{
-// //  console.log("Invalid expression")
-// // }
