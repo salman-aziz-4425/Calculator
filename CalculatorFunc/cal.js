@@ -177,6 +177,7 @@ document.getElementById("saveConstant").onclick = function () {
       "Constant already exist";
   } else {
     document.getElementsByClassName("operations")[0].appendChild(newButton);
+    calculatorButtons[newButton.innerText]=newButton.value
   }
 };
 

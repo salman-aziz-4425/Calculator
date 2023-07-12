@@ -40,6 +40,8 @@ const degreesToRadians = (degrees) => {
 function evaluate(expression,Values) {
   expression=expression.replace("%","/100")
   const tokens = expression.match(/(?:\d+(\.\d+)?|[-+*^/()]|\b\w+\b|\b\w+\b|\bsin\b|\bcos\b)/g);
+  console.log(Values)
+  console.log(tokens)
 for(let i=0;i<tokens.length;i++){
   if(tokens[i] in Values){
     tokens[i]=Values[tokens[i]]
@@ -114,5 +116,4 @@ if(isNaN(values[0])){
 }
 return values.pop().toFixed(4);
 }
-
 
